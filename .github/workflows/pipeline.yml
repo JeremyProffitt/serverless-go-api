@@ -8,6 +8,7 @@ on:
       - develop
       - main
 
+
 # Specify what jobs to run
 jobs:
   sls_deploy:
@@ -41,5 +42,8 @@ jobs:
         run: go mod tidy
 
       - name: Deploy
-        run: sls deploy
+        uses: serverless/github-action@v3.1
+        with:
+          args: deploy
+        
         
