@@ -31,7 +31,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-${{ matrix.go }}
       - name: Run linter
-        if: matrix.go == '1.17'
+        if: matrix.go == '1.18'
         run: make lint
 
       - name: Run tests
@@ -39,6 +39,6 @@ jobs:
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
-        if: matrix.go == '1.17'
+        if: matrix.go == '1.18'
         with:
           files: ./coverage.txt
