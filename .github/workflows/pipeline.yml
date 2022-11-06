@@ -11,8 +11,7 @@ jobs:
       matrix:
         go:
           - "1.18"
-          - "1.17"
-          - "1.16"
+
     steps:
       - name: Set up Go ${{ matrix.go }}
         uses: actions/setup-go@v2
@@ -34,4 +33,6 @@ jobs:
             ${{ runner.os }}-go-${{ matrix.go }}
 
       - name: Deploy
-        run:  sam deploy --stack-name ${STACK_NAME}
+        run:  env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/hello hello/main.go
+	      run:  env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/world world/main.go
+        run:  sls deploy --verbose
