@@ -6,6 +6,7 @@ on:
     branches:
       - actions-** # feature branches
       - develop
+      - main
 
 # Specify what jobs to run
 jobs:
