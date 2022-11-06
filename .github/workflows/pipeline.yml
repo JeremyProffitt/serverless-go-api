@@ -2,7 +2,8 @@ name: pipeline
 on:
   push:
   pull_request:
-
+env:
+  STACK_NAME: serverless-go-api
 jobs:
   tests:
     runs-on: ubuntu-latest
@@ -30,15 +31,7 @@ jobs:
           key: ${{ runner.os }}-go-${{ matrix.go }}-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-${{ matrix.go }}
-      - name: Run linter
-        if: matrix.go == '1.18'
-        run: make lint
 
-      - name: Run tests
-        run: go test -tags=unit -race -coverprofile=coverage.txt -covermode=atomic ./...
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2
+      - name: Deploy
         if: matrix.go == '1.18'
-        with:
-          files: ./coverage.txt
+        run:  sam deploy --stack-name ${STACK_NAME}
