@@ -4,6 +4,9 @@ on:
   pull_request:
 env:
   STACK_NAME: serverless-go-api
+  GOARCH: amd64
+  GOOS: linux
+  
 jobs:
   tests:
     runs-on: ubuntu-latest
@@ -33,7 +36,10 @@ jobs:
             ${{ runner.os }}-go-${{ matrix.go }}
 
       - name: Deploy
-      - run: |
-          env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/hello hello/main.go
-	        env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/world world/main.go
+        uses: actions/cache@v2
+        with:
+          go-version: ${{ matrix.go }}
+        run: |
+          go build -ldflags="-s -w" -o bin/hello hello/main.go
+	        go build -ldflags="-s -w" -o bin/world world/main.go
           sls deploy --verbose
