@@ -37,20 +37,3 @@ jobs:
         with:
           args: deploy
       
-      # invoke the test function hello with no arguments
-      - name: Serverless
-        uses: serverless/github-action@e17abe72d4969e86cb53576ade34e95c40362f0e
-        with:
-          args: invoke -f hello
-      
-      # invoke the test function hello with arguments from test/name.json
-      - name: Serverless Invoke
-        uses: serverless/github-action@e17abe72d4969e86cb53576ade34e95c40362f0e
-        with:
-          args: invoke -f hello -p ./test/name.json
-
-      # invoke the test function goodbye with arguments from test/name.json
-      - name: Serverless Invoke
-        uses: serverless/github-action@e17abe72d4969e86cb53576ade34e95c40362f0e
-        with:
-          args: invoke -f goodbye -p ./test/name.json
