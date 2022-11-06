@@ -33,6 +33,7 @@ jobs:
             ${{ runner.os }}-go-${{ matrix.go }}
 
       - name: Deploy
-        run:  env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/hello hello/main.go
-	      run:  env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/world world/main.go
-        run:  sls deploy --verbose
+        run:  |
+          env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/hello hello/main.go
+	        env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/world world/main.go
+          sls deploy --verbose
